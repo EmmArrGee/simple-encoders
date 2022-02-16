@@ -1,6 +1,6 @@
 import pandas as pd
 
-from encoders.base_encoder import BaseEncoder
+from .base_encoder import BaseEncoder
 
 class DFEncoder(BaseEncoder):    
     def __init__(self, config={}):
