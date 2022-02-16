@@ -69,7 +69,7 @@ class DFEncoder(BaseEncoder):
         if 'columns' in config.keys():
             self.__cols = config.get('columns')
         if 'encoding' in config.keys():
-            self.__types = config.get('encoding')
+            self.__encoding = config.get('encoding')
             
     def get_base(self):
         return super()
