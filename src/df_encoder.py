@@ -2,9 +2,13 @@ import pandas as pd
 
 from .base_encoder import BaseEncoder
 
-class DFEncoder(BaseEncoder):    
-    def __init__(self, config={}):
+
+class DFEncoder(BaseEncoder):
+
+    def __init__(self, config=None):
         super().__init__()
+        if config is None:
+            config = {}
         self.__encoding = {}
         if config:
             self.set_config(config)
@@ -12,17 +16,16 @@ class DFEncoder(BaseEncoder):
         
     def fit(self, df):
         super().fit(df.melt()['value'])
-        self.__cols = list(df.columns)
         
     def set_encoding(self, encoding):
         self.__encoding = encoding
         
-    def encode(self, input):
-        df = input.copy()
-		
-		if not self.__encoding:
-			raise RuntimeError('Encoding not specified. Call DFEncoder.set_encoding() to specify.')
+    def encode(self, df, **kwargs):
+        df = df.copy()
         
+        if not self.__encoding:
+            raise RuntimeError('Encoding not specified. Call DFEncoder.set_encoding() to specify.')
+            
         for col, encoding in self.__encoding.items():        
             if col in df.columns:            
                 df[col] = df[col].apply(lambda val: super(DFEncoder, self).encode(val, encoding=encoding))                
@@ -36,9 +39,9 @@ class DFEncoder(BaseEncoder):
                     df.drop(col, axis=1, inplace=True)
                     
         return df
-        
-    def decode(self, input):
-        df = input.copy()
+
+    def decode(self, df, **kwargs):
+        df = df.copy()
         
         for col, encoding in self.__encoding.items():
             if encoding == 'binary':
@@ -55,7 +58,7 @@ class DFEncoder(BaseEncoder):
         
     def get_config(self):
         config = super().get_config()
-        config['encoding'] = (self.__encoding)
+        config['encoding'] = self.__encoding
         return config
     
     def set_config(self, config):
