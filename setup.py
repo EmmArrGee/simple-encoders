@@ -8,7 +8,7 @@ with open(path.join(here, 'README.MD'), encoding='utf-8') as file:
 
 setup(
     name='simple_encoders',
-    version='0.1.5',
+    version='0.1.6',
     description='Simple encoders to pre-process categoric variables for machine learning systems',
     long_description=long_description,
     long_description_content_type='text/markdown',

@@ -38,10 +38,7 @@ class BaseEncoder:
             return 0
     
     def __encode_to_label(self, value):
-        if value in self.__encoder:
-            return self.__encoder[value]
-        else:
-            return 0
+        return self.__encode_basic(value)
             
     def __encode_to_binary(self, value):
         enc_value = self.__encode_basic(value)
@@ -58,10 +55,7 @@ class BaseEncoder:
             return None
 
     def __decode_from_label(self, value):
-        if value in self.__decoder:
-            return self.__decoder[value]
-        else:
-            return None
+        return self.__decode_basic(value)
             
     def __decode_from_binary(self, value):
         s = ''.join([str(v) for v in value])
