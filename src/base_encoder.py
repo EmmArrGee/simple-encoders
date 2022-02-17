@@ -1,5 +1,7 @@
 class BaseEncoder:
-    def __init__(self, config={}): 
+    def __init__(self, config=None):
+        if config is None:
+            config = {}
         self.__encoder = {}
         self.__decoder = {}
         self.__len_bin = 0
