@@ -4,7 +4,7 @@ class BaseEncoder:
         self.__decoder = {}
         self.__len_bin = 0
         if config:
-            self.import_config(config)
+            self.set_config(config)
         return
     
     def fit(self, data):

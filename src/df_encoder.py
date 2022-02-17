@@ -5,10 +5,9 @@ from .base_encoder import BaseEncoder
 class DFEncoder(BaseEncoder):    
     def __init__(self, config={}):
         super().__init__()
-        self.__cols = []
         self.__encoding = {}
         if config:
-            self.import_config(config)
+            self.set_config(config)
         return
         
     def fit(self, df):
@@ -16,17 +15,13 @@ class DFEncoder(BaseEncoder):
         self.__cols = list(df.columns)
         
     def set_encoding(self, encoding):
-        missing_cols = [k for k in encoding.keys() if k not in self.__cols]
-        if missing_cols:
-            raise KeyError("Fitting not done for columns: {}".format(missing_cols))
-            
         self.__encoding = encoding
-
-    def get_encoding(self):
-        return self.__encoding
         
     def encode(self, input):
         df = input.copy()
+		
+		if not self.__encoding:
+			raise RuntimeError('Encoding not specified. Call DFEncoder.set_encoding() to specify.')
         
         for col, encoding in self.__encoding.items():        
             if col in df.columns:            
@@ -60,14 +55,11 @@ class DFEncoder(BaseEncoder):
         
     def get_config(self):
         config = super().get_config()
-        config['columns'] = (self.__cols)
         config['encoding'] = (self.__encoding)
         return config
     
     def set_config(self, config):
         super().set_config(config)
-        if 'columns' in config.keys():
-            self.__cols = config.get('columns')
         if 'encoding' in config.keys():
             self.__encoding = config.get('encoding')
             
