@@ -23,6 +23,10 @@ setup(
         'License :: OSI Approved :: Apache Software License',
         'Operating System :: OS Independent'
     ],
+    tests_require=[
+        'pytest',
+        'pandas>=1.4.1'
+    ],
     extras_require={
         'dataframes': 'pandas>=1.4.1'
     },
